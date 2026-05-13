@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Burger - San Luis, Argentina</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Russo+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #FFD600;
+    --red: #E53935;
+    --black: #0D0D0D;
+    --dark: #181818;
+    --card: #1E1E1E;
+    --text: #F5F5F5;
+    --muted: #999;
+    --border: #2E2E2E;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,13,13,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 2px solid var(--yellow);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; height: 60px;
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; color: var(--yellow); letter-spacing: 2px;
+  }
+  .nav-logo span { color: #fff; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    color: var(--text); text-decoration: none;
+    font-weight: 700; font-size: 13px; letter-spacing: 1px;
+    text-transform: uppercase; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--yellow); }
+  .cart-btn {
+    background: var(--yellow); color: var(--black);
+    border: none; border-radius: 50px;
+    padding: 8px 20px; font-weight: 900; font-size: 14px;
+    cursor: pointer; display: flex; align-items: center; gap: 8px;
+    transition: transform .15s, background .2s;
+    font-family: 'Nunito', sans-serif;
+  }
+  .cart-btn:hover { transform: scale(1.05); }
+  .cart-count {
+    background: var(--red); color: #fff;
+    border-radius: 50%; width: 20px; height: 20px;
+    font-size: 11px; display: flex; align-items: center; justify-content: center;
+    font-weight: 900;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    flex-direction: column; text-align: center;
+    padding: 80px 24px 60px;
+    background:
+      radial-gradient(ellipse at 30% 50%, rgba(229,57,53,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 50%, rgba(255,214,0,0.10) 0%, transparent 60%),
+      var(--black);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,214,0,0.04) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,214,0,0.04) 40px);
+    pointer-events: none;
+  }
+  .hero-tag {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px; letter-spacing: 6px; color: var(--yellow);
+    margin-bottom: 8px;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 18vw, 180px);
+    line-height: .9; color: #fff;
+    text-shadow: 4px 4px 0px var(--red), 8px 8px 0px rgba(229,57,53,0.3);
+    letter-spacing: 4px;
+  }
+  .hero-title .dr { color: var(--yellow); }
+  .hero-sub {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(18px, 5vw, 40px);
+    letter-spacing: 8px; color: var(--muted); margin-top: 8px;
+  }
+  .hero-tagline {
+    font-size: 16px; color: var(--muted); margin: 24px 0 40px;
+    max-width: 400px; line-height: 1.6;
+  }
+  .hero-cta {
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+  }
+  .btn-primary {
+    background: var(--yellow); color: var(--black);
+    border: none; border-radius: 50px;
+    padding: 14px 36px; font-weight: 900; font-size: 15px;
+    cursor: pointer; text-decoration: none; display: inline-block;
+    font-family: 'Nunito', sans-serif;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 4px 20px rgba(255,214,0,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,214,0,0.4); }
+  .btn-outline {
+    background: transparent; color: var(--text);
+    border: 2px solid var(--border); border-radius: 50px;
+    padding: 13px 36px; font-weight: 700; font-size: 15px;
+    cursor: pointer; text-decoration: none; display: inline-block;
+    font-family: 'Nunito', sans-serif;
+    transition: border-color .2s, color .2s;
+  }
+  .btn-outline:hover { border-color: var(--yellow); color: var(--yellow); }
+
+  /* SECTION TITLES */
+  .section-header {
+    text-align: center; padding: 80px 24px 48px;
+  }
+  .section-tag {
+    font-size: 12px; letter-spacing: 6px; color: var(--yellow);
+    text-transform: uppercase; font-weight: 700;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 8vw, 90px); color: #fff;
+    letter-spacing: 3px; line-height: 1;
+    text-shadow: 3px 3px 0px rgba(229,57,53,0.4);
+  }
+
+  /* TABS */
+  .tabs-wrap { padding: 0 24px 24px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .tab-btn {
+    background: var(--card); color: var(--muted);
+    border: 1.5px solid var(--border); border-radius: 50px;
+    padding: 9px 22px; font-weight: 700; font-size: 13px; letter-spacing: .5px;
+    cursor: pointer; transition: all .2s; font-family: 'Nunito', sans-serif;
+    text-transform: uppercase;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--yellow); color: var(--black); border-color: var(--yellow);
+  }
+
+  /* MENU SECTION */
+  #menu { padding-bottom: 100px; }
+  .menu-section { display: none; padding: 0 24px; }
+  .menu-section.active { display: block; }
+
+  /* MENU CATEGORY TITLE */
+  .cat-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px; color: var(--yellow); letter-spacing: 2px;
+    margin: 40px 0 20px; display: flex; align-items: center; gap: 12px;
+  }
+  .cat-title::after { content: ''; flex: 1; height: 2px; background: var(--border); }
+
+  /* PRICE HEADER */
+  .price-header {
+    background: var(--card); border: 1.5px solid var(--border);
+    border-radius: 16px; padding: 20px 28px; margin-bottom: 28px;
+    display: flex; gap: 32px; flex-wrap: wrap; align-items: center;
+  }
+  .price-tier { text-align: center; }
+  .price-tier-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px; letter-spacing: 3px; color: var(--muted);
+  }
+  .price-tier-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px; color: var(--yellow);
+  }
+  .price-note { font-size: 12px; color: var(--muted); margin-left: auto; max-width: 260px; line-height: 1.5; }
+
+  /* ITEM CARDS */
+  .items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px; max-width: 1200px; margin: 0 auto;
+  }
+  .item-card {
+    background: var(--card); border: 1.5px solid var(--border);
+    border-radius: 16px; padding: 20px;
+    display: flex; flex-direction: column; gap: 10px;
+    transition: border-color .2s, transform .2s;
+    position: relative; overflow: hidden;
+  }
+  .item-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--yellow); transform: scaleX(0); transition: transform .2s;
+    transform-origin: left;
+  }
+  .item-card:hover { border-color: var(--yellow); transform: translateY(-2px); }
+  .item-card:hover::before { transform: scaleX(1); }
+  .item-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px; color: #fff; letter-spacing: 1px;
+  }
+  .item-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .item-ingredients { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ingredient-tag {
+    background: rgba(255,214,0,0.08); color: var(--yellow);
+    border: 1px solid rgba(255,214,0,0.2);
+    border-radius: 50px; padding: 3px 10px; font-size: 11px; font-weight: 700;
+    letter-spacing: .5px;
+  }
+  .item-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+  .item-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; color: var(--yellow);
+  }
+  .item-price .price-note-small { font-size: 11px; color: var(--muted); display: block; font-family: 'Nunito', sans-serif; margin-top: -6px; }
+
+  /* TIER SELECTOR */
+  .tier-select {
+    background: transparent; border: 1.5px solid var(--border);
+    color: var(--text); border-radius: 8px; padding: 6px 10px;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+  }
+  .tier-select option { background: var(--dark); }
+
+  /* ADD BUTTON */
+  .add-btn {
+    background: var(--yellow); color: var(--black);
+    border: none; border-radius: 50px; width: 40px; height: 40px;
+    font-size: 24px; font-weight: 900; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform .15s, background .15s; flex-shrink: 0;
+  }
+  .add-btn:hover { transform: scale(1.1); }
+  .add-btn:active { transform: scale(.95); }
+
+  /* FULL PRICE ITEMS (lomito, promos, etc.) */
+  .item-card.full-price .item-price { font-size: 32px; }
+  .combo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px; max-width: 1200px; margin: 0 auto;
+  }
+  .combo-card {
+    background: var(--card); border: 1.5px solid var(--border);
+    border-radius: 16px; padding: 24px;
+    transition: border-color .2s;
+  }
+  .combo-card:hover { border-color: rgba(255,214,0,0.4); }
+  .combo-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px; color: var(--yellow); letter-spacing: 1px; margin-bottom: 12px;
+  }
+  .combo-desc { font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.6; }
+  .combo-prices { display: flex; flex-wrap: wrap; gap: 12px; }
+  .combo-price-item { text-align: center; }
+  .combo-price-label { font-size: 11px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+  .combo-price-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px; color: #fff;
+  }
+  .combo-add-area { margin-top: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .combo-tier-wrap { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .add-btn-sm {
+    background: var(--yellow); color: var(--black);
+    border: none; border-radius: 50px;
+    padding: 8px 18px; font-weight: 900; font-size: 13px;
+    cursor: pointer; font-family: 'Nunito', sans-serif;
+    transition: transform .15s;
+  }
+  .add-btn-sm:hover { transform: scale(1.05); }
+
+  /* BEBIDAS / POSTRES */
+  .simple-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px; max-width: 1200px; margin: 0 auto;
+  }
+  .simple-card {
+    background: var(--card); border: 1.5px solid var(--border);
+    border-radius: 14px; padding: 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    transition: border-color .2s;
+  }
+  .simple-card:hover { border-color: var(--yellow); }
+  .simple-name { font-weight: 700; font-size: 15px; }
+  .simple-price { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--yellow); }
+  .simple-footer { display: flex; align-items: center; gap: 10px; }
+
+  /* EPICO MENU */
+  .epic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px; max-width: 1200px; margin: 0 auto;
+  }
+  .epic-card {
+    background: linear-gradient(135deg, #1E1E1E 0%, #252525 100%);
+    border: 1.5px solid var(--border);
+    border-radius: 16px; padding: 24px;
+    position: relative; overflow: hidden;
+    transition: border-color .2s, transform .2s;
+  }
+  .epic-card.prox {
+    opacity: .5; pointer-events: none;
+  }
+  .epic-card.prox::after {
+    content: 'PRÓXIMAMENTE';
+    position: absolute; inset: 0;
+    background: rgba(13,13,13,0.8);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 28px;
+    color: var(--red); letter-spacing: 3px;
+    border-radius: 14px;
+  }
+  .epic-card:not(.prox):hover { border-color: var(--yellow); transform: translateY(-2px); }
+  .epic-corner {
+    position: absolute; top: 0; right: 0;
+    background: var(--red); color: #fff;
+    font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 2px;
+    padding: 4px 12px; border-radius: 0 14px 0 10px;
+  }
+  .epic-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; color: var(--yellow); letter-spacing: 2px; margin-bottom: 10px;
+  }
+  .epic-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+  .epic-bottom { display: flex; align-items: flex-end; justify-content: space-between; }
+  .epic-price { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: #fff; }
+  .epic-note { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* CART SIDEBAR */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s;
+  }
+  .overlay.open { opacity: 1; pointer-events: all; }
+  .cart-sidebar {
+    position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100vw);
+    background: var(--dark); border-left: 2px solid var(--border);
+    z-index: 201; transform: translateX(100%); transition: transform .3s cubic-bezier(.4,0,.2,1);
+    display: flex; flex-direction: column;
+  }
+  .cart-sidebar.open { transform: translateX(0); }
+  .cart-header {
+    padding: 20px 24px; border-bottom: 1.5px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .cart-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; color: var(--yellow); letter-spacing: 2px;
+  }
+  .close-btn {
+    background: var(--border); border: none; color: var(--text);
+    width: 36px; height: 36px; border-radius: 50%;
+    font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+  }
+  .close-btn:hover { background: var(--red); }
+  .cart-items { flex: 1; overflow-y: auto; padding: 20px 24px; display: flex; flex-direction: column; gap: 14px; }
+  .cart-empty {
+    text-align: center; color: var(--muted); padding: 60px 0;
+    font-size: 15px;
+  }
+  .cart-empty-icon { font-size: 48px; margin-bottom: 12px; }
+  .cart-item {
+    background: var(--card); border: 1.5px solid var(--border);
+    border-radius: 12px; padding: 14px 16px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .cart-item-detail { font-size: 12px; color: var(--muted); }
+  .cart-item-price { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--yellow); }
+  .cart-item-controls { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .qty-btn {
+    background: var(--border); border: none; color: var(--text);
+    width: 28px; height: 28px; border-radius: 50%; font-size: 16px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .15s;
+  }
+  .qty-btn:hover { background: var(--yellow); color: var(--black); }
+  .qty-num { font-weight: 700; font-size: 15px; min-width: 24px; text-align: center; }
+  .remove-btn {
+    background: none; border: none; color: var(--muted);
+    font-size: 18px; cursor: pointer; padding: 0 4px; margin-left: auto;
+    transition: color .15s;
+  }
+  .remove-btn:hover { color: var(--red); }
+  .cart-footer { padding: 20px 24px; border-top: 1.5px solid var(--border); flex-shrink: 0; }
+  .cart-total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .cart-total-label { font-size: 14px; color: var(--muted); font-weight: 700; }
+  .cart-total-val { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--yellow); }
+  .cart-note { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+  .whatsapp-btn {
+    width: 100%; background: #25D366; color: #fff;
+    border: none; border-radius: 50px;
+    padding: 16px; font-weight: 900; font-size: 16px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+    font-family: 'Nunito', sans-serif;
+    transition: transform .15s, background .2s; letter-spacing: .5px;
+  }
+  .whatsapp-btn:hover { background: #20BA57; transform: translateY(-2px); }
+  .whatsapp-btn:disabled { background: #444; cursor: not-allowed; transform: none; }
+  .whatsapp-icon { width: 22px; height: 22px; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+    background: var(--yellow); color: var(--black);
+    padding: 12px 24px; border-radius: 50px; font-weight: 900; font-size: 14px;
+    z-index: 300; transition: transform .3s cubic-bezier(.4,0,.2,1);
+    white-space: nowrap; box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 40px 24px;
+    border-top: 1.5px solid var(--border); color: var(--muted);
+    font-size: 13px;
+  }
+  footer strong { color: var(--yellow); }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .hero-title { font-size: clamp(64px, 22vw, 120px); }
+    .price-header { gap: 16px; }
+    .price-note { display: none; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .menu-section.active .item-card,
+  .menu-section.active .combo-card,
+  .menu-section.active .epic-card,
+  .menu-section.active .simple-card {
+    animation: fadeUp .4s ease both;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">DR.<span>BURGER</span></div>
+  <div class="nav-links">
+    <a href="#menu">Menú</a>
+    <a href="#menu" onclick="showTab('promos')">Promos</a>
+    <a href="#menu" onclick="showTab('combos')">Combos</a>
+  </div>
+  <button class="cart-btn" onclick="openCart()">
+    🛒 Mi pedido
+    <span class="cart-count" id="cartCount">0</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">🍔 San Luis, Argentina</div>
+  <h1 class="hero-title"><span class="dr">DR.</span><br>BURGER</h1>
+  <div class="hero-sub">Hamburguesería artesanal</div>
+  <p class="hero-tagline">Las hamburguesas más épicas de San Luis. Medallones artesanales, ingredientes de primera.</p>
+  <div class="hero-cta">
+    <a href="#menu" class="btn-primary">Ver el menú</a>
+    <a href="#menu" class="btn-outline" onclick="showTab('promos')">Promos para compartir</a>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="section-header">
+    <div class="section-tag">🍔 Lo que hacemos</div>
+    <h2 class="section-title">NUESTRO MENÚ</h2>
+  </div>
+
+  <div class="tabs-wrap">
+    <button class="tab-btn active" onclick="showTab('burgers')">Hamburguesas</button>
+    <button class="tab-btn" onclick="showTab('lomito')">Lomito</button>
+    <button class="tab-btn" onclick="showTab('combos')">Combos</button>
+    <button class="tab-btn" onclick="showTab('promos')">Promos para compartir</button>
+    <button class="tab-btn" onclick="showTab('epico')">Menú Épico</button>
+    <button class="tab-btn" onclick="showTab('bebidas')">Bebidas & Postres</button>
+  </div>
+
+  <!-- BURGERS -->
+  <div class="menu-section active" id="sec-burgers">
+    <div class="price-header" style="max-width:1200px;margin:0 auto 28px;">
+      <div class="price-tier"><div class="price-tier-label">DOBLE</div><div class="price-tier-value">$10.800</div></div>
+      <div class="price-tier"><div class="price-tier-label">TRIPLE</div><div class="price-tier-value">$13.700</div></div>
+      <div class="price-tier"><div class="price-tier-label">CUÁDRUPLE</div><div class="price-tier-value">$16.600</div></div>
+      <div class="price-note">Todas las variedades tienen el mismo valor · Porción de papas: $1.500 · Doble feta de cheddar: +$2.000/hamburguesa</div>
+    </div>
+
+    <div class="cat-title">Doctor Burger</div>
+    <div class="items-grid">
+
+      <div class="item-card" data-name="Dr. Chimi" data-prices='{"Doble":10800,"Triple":13700,"Cuádruple":16600}' data-desc="Dr. Chimi - {tier}">
+        <div class="item-name">Dr. Chimi</div>
+        <div class="item-ingredients">
+          <span class="ingredient-tag">Pan de Papa</span>
+          <span class="ingredient-tag">Queso Cheddar</span>
+          <span class="ingredient-tag">Cebolla Morada</span>
+          <span class="ingredient-tag">Mayochimi</span>
+        </div>
+        <div class="item-footer">
+          <div>
+            <select class="tier-select" onchange="updatePrice(this)">
+              <option value="10800">Doble</option>
+              <option value="13700">Triple</option>
+              <option value="16600">Cuádruple</option>
+            </select>
+            <div class="item-price" style="font-size:22px;margin-top:4px;">$<span class="price-display">10.800</span></div>
+          </div>
+          <button class="add-btn" onclick="addFromCard(this)">+</button>
+        </div>
+      </div>
+
+      <div class="item-card" data-name="Dr. Criolla" data-prices='{"Doble":10800,"Triple":13700,"Cuádruple":16600}' data-desc="Dr. Criolla - {tier}">
+        <div class="item-name">Dr. Criolla</div>
+        <div class="item-ingredients">
+          <span class="ingredient-tag">Pan Papa</span>
+          <span class="ingredient-tag">Queso Cheddar</span>
+          <span class="ingredient-tag">Salsa Alioli</span>
+          <span class="ingredient-tag">Criolla</span>
+        </div>
+        <div class="item-footer">
+          <div>
+            <select class="tier-select" onchange="updatePrice(this)">
+              <option value="10800">Doble</option>
+              <option value="13700">Triple</option>
+              <option value="16600">Cuádruple</option>
+            </select>
+            <div class="item-price" style="font-size:22px;margin-top:4px;">$<span class="price-display">10.800</span></div>
+          </div>
+          <button class="add-btn" onclick="addFromCard(this)">+</button>
+        </div>
+      </div>
+
+      <div class="item-card" data-name="Dr. Melt" data-prices='{"Doble":10800,"Triple":13700,"Cuádruple":16600}' data-desc="Dr. Melt - {tier}">
+        <div class="item-name">Dr. Melt</div>
+        <div class="item-ingredients">
+          <span class="ingredient-tag">Queso Cheddar</span>
+          <span class="ingredient-tag">Pan de Molde</span>
+          <span class="ingredient-tag">Cebolla Caramelizada</span>
+          <span class="ingredient-tag">Alioli</span>
+          <span class="ingredient-tag">Panceta Ahumada</span>
+        </div>
+        <div class="item-footer">
+          <div>
+            <select class="tier-select" onchange="updatePrice(this)">
+              <option value="10800">Doble</option>
+              <option value="13700">Triple</option>
+              <option value="16600">Cuádruple</option>
+            </select>
+            <div class="item-price" style="font-size:22px;margin-top:4px;">$<span class="price-display">10.800</span></div>
+          </div>
+          <button class="add-btn" onclick="addFromCard(this)">+</button>
+        </div>
+      </div>
+
+      <div class="item-card" data-name="Dr. Roque" data-prices='{"Doble":10800,"Triple":13700,"Cuádruple":16600}' data-desc="Dr. Roque - {tier}">
+        <div class="item-name">Dr. Roque</div>
+        <div class="item-ingredients">
+          <span class="ingredient-tag">Pan de Papa</span>
+          <span class="ingredient-tag">Queso Roquefot</span>
+          <span class="ingredient-tag">Cebolla Caramelizada</span>
+          <span class="ingredient-tag">Rúcula</span>
+          <span class="ingredient-tag">Alioli</span>
+        </div>
+        <div class="item-footer">
+          <div>
+            <select class="tier-select" onchange="updatePrice(this)">
+              <option value="10800">Doble</option>
+              <option value="13700">Triple</option>
+              <option value="16600">Cuádruple</option>
+            </select>
+            <div class="item-price" style="font-size:22px;margin-top:4px;">$<span class="price-display">10.800</span></div>
+          </div>
+          <button class="add-btn" onclick="addFromCard(this)">+</button>
+        </div>
+      </div>
+
+      <div class="item-card" data-name="Oklahoma" data-prices='{"Doble":10800,"Triple":13700,"Cuádruple":16600}' data-desc="Oklahoma - {tier}">
+        <div class="item-name">Oklahoma</div>
+        <div class="item-ingredients">
+          <span class="ingredient-tag">Smasheado</span>
+          <span class="ingredient-tag">Cebolla Prensada</span>
+          <span class="ingredient-tag">Queso Cheddar</span>
+          <span class="ingredient-tag">Alioli</span>
+          <span class="ingredient-tag">Pan de Sésamo</span>
+        </div>
+        <div class="item-footer">
+          <div>
+            <select class="tier-select" onchange="updatePrice(this)">
+              <option value="10800">Doble</option>
+              <option value="13700">Triple</option>
+              <option value="16600">Cuádruple</option>
+            </select>
+            <div class="item-price" style="font-size:22px;margin-top:4px;">$<span class="price-display">10.800</span></div>
+          </div>
+          <button class="add-btn" onclick="addFromCard(this)">+</button>
+        </div>
+      </div>
+
+      <div class="item-card" data-name="Cheese Burger" data-prices='{"Doble":10800,"Triple":13700,"Cuádruple":16600}' data-desc="Cheese Burger - {tier}">
+        <div class="item-name">Cheese Burger</div>
+        <div class="item-ingredients">
+          <span class="ingredient-tag">Pan de Papa</span>
+          <span class="ingredient-tag">Queso Cheddar</span>
+          <span class="ingredient-tag">Cebolla Cruda</span>
+          <span class="ingredient-tag">Ketchup</span>
+          <span class="ingredient-tag">Mayo</span>
+        </div>
+        <div class="item-footer">
+          <div>
+            <select class="tier-select" onchange="updatePrice(this)">
+              <option value="10800">Doble</option>
+              <option value="13700">Triple</option>
+              <option value="16600">Cuádruple</option>
+            </select>
+            <div class="item-price" style="font-size:22px;margin-top:4px;">$<span class="price-display">10.800</span></div>
+          </div>
+          <button class="add-btn" onclick="addFromCard(this)">+</button>
+        </div>
+      </div>
+
+      <div class="item-card" data-name="Ultra Cheese" data-prices='{"Doble":10800,"Triple":13700,"Cuádruple":16600}' data-desc="Ultra Cheese - {tier}">
+        <div class="item-name">Ultra Cheese</div>
+        <div class="item-ingredients">
+          <span class="ingredient-tag">Pan de Papa</span>
+          <span class="ingredient-tag">Queso Cheddar</span>
+          <span class="ingredient-tag">Cebolla Caramelizada</span>
+          <span class="ingredient-tag">Alioli</span>
+          <span class="ingredient-tag">Queso Porch</span>
+        </div>
+        <div class="item-footer">
+          <div>
+            <select class="tier-select" onchange="updatePrice(this)">
+              <option value="10800">Doble</option>
+              <option value="13700">Triple</option>
+              <option value="16600">Cuádruple</option>
+            </select>
+            <div class="item-price" style="font-size:22px;margin-top:4px;">$<span class="price-display">10.800</span></div>
+          </div>
+          <button class="add-btn" onclick="addFromCard(this)">+</button>
+        </div>
+      </div>
+
+      <div class="item-card" data-name="Dr. Argento" data-prices='{"Doble":10800,"Triple":13700,"Cuádruple":16600}' data-desc="Dr. Argento - {tier}">
+        <div class="item-name">Dr. Argento</div>
+        <div class="item-ingredients">
+          <span class="ingredient-tag">Pan de Papa</span>
+          <span class="ingredient-tag">Queso Cheddar</span>
+          <span class="ingredient-tag">Lechuga</span>
+          <span class="ingredient-tag">Tomate</span>
+          <span class="ingredient-tag">Cebolla Morada</span>
+          <span class="ingredient-tag">Salsa Tasty</span>
+        </div>
+        <div class="item-footer">
+          <div>
+            <select class="tier-select" onchange="updatePrice(this)">
+              <option value="10800">Doble</option>
+              <option value="13700">Triple</option>
+              <option value="16600">Cuádruple</option>
+            </select>
+            <div class="item-price" style="font-size:22px;margin-top:4px;">$<span class="price-display">10.800</span></div>
+          </div>
+          <button class="add-btn" onclick="addFromCard(this)">+</button>
+        </div>
+      </div>
+
+      <div class="item-card" data-name="Dr. América" data-prices='{"Doble":10800,"Triple":13700,"Cuádruple":16600}' data-desc="Dr. América - {tier}">
+        <div class="item-name">Dr. América</div>
+        <div class="item-ingredients">
+          <span class="ingredient-tag">Pan de Papa</span>
+          <span class="ingredient-tag">Queso Cheddar</span>
+          <span class="ingredient-tag">Panceta Ahumada</span>
+          <span class="ingredient-tag">Cebolla Caramelizada</span>
+          <span class="ingredient-tag">Mayo de Ajo</span>
+        </div>
+        <div class="item-footer">
+          <div>
+            <select class="tier-select" onchange="updatePrice(this)">
+              <option value="10800">Doble</option>
+              <option value="13700">Triple</option>
+              <option value="16600">Cuádruple</option>
+            </select>
+            <div class="item-price" style="font-size:22px;margin-top:4px;">$<span class="price-display">10.800</span></div>
+          </div>
+          <button class="add-btn" onclick="addFromCard(this)">+</button>
+        </div>
+      </div>
+
+      <div class="item-card" data-name="Dra. Muzza" data-prices='{"Doble":10800,"Triple":13700,"Cuádruple":16600}' data-desc="Dra. Muzza - {tier}">
+        <div class="item-name">Dra. Muzza</div>
+        <div class="item-ingredients">
+          <span class="ingredient-tag">Pan de Papa</span>
+          <span class="ingredient-tag">Queso Muzza</span>
+          <span class="ingredient-tag">Panceta Ahumada</span>
+          <span class="ingredient-tag">Ketchup</span>
+        </div>
+        <div class="item-footer">
+          <div>
+            <select class="tier-select" onchange="updatePrice(this)">
+              <option value="10800">Doble</option>
+              <option value="13700">Triple</option>
+              <option value="16600">Cuádruple</option>
+            </select>
+            <div class="item-price" style="font-size:22px;margin-top:4px;">$<span class="price-display">10.800</span></div>
+          </div>
+          <button class="add-btn" onclick="addFromCard(this)">+</button>
+        </div>
+      </div>
+
+      <!-- EXTRAS -->
+      <div class="item-card full-price" data-name="Porción de Papas" data-fixed="1500" data-desc="Porción de Papas">
+        <div class="item-name">Porción de Papas</div>
+        <div class="item-desc">Para acompañar tu hamburguesa</div>
+        <div class="item-footer">
+          <div class="item-price">$1.500</div>
+          <button class="add-btn" onclick="addFixed(this, 'Porción de Papas', 1500)">+</button>
+        </div>
+      </div>
+
+      <div class="item-card full-price" data-name="Doble Feta de Cheddar" data-fixed="2000" data-desc="Doble Feta de Cheddar">
+        <div class="item-name">Doble Feta Cheddar</div>
+        <div class="item-desc">Extra por hamburguesa</div>
+        <div class="item-footer">
+          <div class="item-price">$2.000</div>
+          <button class="add-btn" onclick="addFixed(this, 'Doble Feta de Cheddar', 2000)">+</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LOMITO -->
+  <div class="menu-section" id="sec-lomito">
+    <div class="cat-title">Lomito Completo</div>
+    <div class="items-grid">
+      <div class="item-card full-price" data-name="Lomito Completo" data-fixed="15000" data-desc="Lomito Completo + papas">
+        <div class="item-name">Lomito Completo</div>
+        <div class="item-ingredients">
+          <span class="ingredient-tag">Pan 20cm</span>
+          <span class="ingredient-tag">Carne de Lomo</span>
+          <span class="ingredient-tag">Lechuga</span>
+          <span class="ingredient-tag">Huevo</span>
+          <span class="ingredient-tag">Jamón</span>
+          <span class="ingredient-tag">Salsa de Tomate</span>
+          <span class="ingredient-tag">Queso Mozzarella</span>
+        </div>
+        <div class="item-desc">Incluye porción de papas</div>
+        <div class="item-footer">
+          <div class="item-price">$15.000</div>
+          <button class="add-btn" onclick="addFixed(this, 'Lomito Completo + papas', 15000)">+</button>
+        </div>
+      </div>
+
+      <div class="item-card full-price" data-name="2x Lomito Completo" data-fixed="28000" data-desc="2x Lomito Completo + papas">
+        <div class="item-name">2x Lomito Completo</div>
+        <div class="item-desc">Dos lomitos completos + papas</div>
+        <div class="item-footer">
+          <div class="item-price">$28.000</div>
+          <button class="add-btn" onclick="addFixed(this, '2x Lomito Completo + papas', 28000)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cat-title" style="margin-top:40px;">Combos con Lomito</div>
+    <div class="combo-grid">
+      <div class="combo-card">
+        <div class="combo-name">1 Lomo + 1 Burger + Papas</div>
+        <div class="combo-desc">Un lomito completo y una hamburguesa a elección con papas</div>
+        <div class="combo-prices">
+          <div class="combo-price-item"><div class="combo-price-label">Doble</div><div class="combo-price-val">$24.600</div></div>
+          <div class="combo-price-item"><div class="combo-price-label">Triple</div><div class="combo-price-val">$27.000</div></div>
+          <div class="combo-price-item"><div class="combo-price-label">Cuádruple</div><div class="combo-price-val">$29.500</div></div>
+        </div>
+        <div class="combo-add-area">
+          <div class="combo-tier-wrap">
+            <select class="tier-select" id="lomo-combo-tier">
+              <option value="24600">Doble</option>
+              <option value="27000">Triple</option>
+              <option value="29500">Cuádruple</option>
+            </select>
+          </div>
+          <button class="add-btn-sm" onclick="addCombo('lomo-combo-tier', '1 Lomo + 1 Burger + Papas')">+ Agregar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMBOS -->
+  <div class="menu-section" id="sec-combos">
+    <div class="cat-title">Combos</div>
+    <div class="combo-grid">
+
+      <div class="combo-card">
+        <div class="combo-name">2 Burgers a elección + Papas + 2 Gaseosas 500cc</div>
+        <div class="combo-prices">
+          <div class="combo-price-item"><div class="combo-price-label">Doble</div><div class="combo-price-val">$27.200</div></div>
+          <div class="combo-price-item"><div class="combo-price-label">Triple</div><div class="combo-price-val">$33.400</div></div>
+        </div>
+        <div class="combo-add-area">
+          <select class="tier-select" id="c1">
+            <option value="27200">Doble</option>
+            <option value="33400">Triple</option>
+          </select>
+          <button class="add-btn-sm" onclick="addCombo('c1', '2 Burgers + Papas + 2 Gaseosas 500cc')">+ Agregar</button>
+        </div>
+      </div>
+
+      <div class="combo-card">
+        <div class="combo-name">2 Burgers a elección + Papas + Postre</div>
+        <div class="combo-prices">
+          <div class="combo-price-item"><div class="combo-price-label">Doble</div><div class="combo-price-val">$26.700</div></div>
+          <div class="combo-price-item"><div class="combo-price-label">Triple</div><div class="combo-price-val">$32.900</div></div>
+        </div>
+        <div class="combo-add-area">
+          <select class="tier-select" id="c2">
+            <option value="26700">Doble</option>
+            <option value="32900">Triple</option>
+          </select>
+          <button class="add-btn-sm" onclick="addCombo('c2', '2 Burgers + Papas + Postre')">+ Agregar</button>
+        </div>
+      </div>
+
+      <div class="combo-card">
+        <div class="combo-name">3 Burgers a elección + Papas + Gaseosa 1.5L</div>
+        <div class="combo-prices">
+          <div class="combo-price-item"><div class="combo-price-label">Doble</div><div class="combo-price-val">$36.800</div></div>
+          <div class="combo-price-item"><div class="combo-price-label">Triple</div><div class="combo-price-val">$45.800</div></div>
+        </div>
+        <div class="combo-add-area">
+          <select class="tier-select" id="c3">
+            <option value="36800">Doble</option>
+            <option value="45800">Triple</option>
+          </select>
+          <button class="add-btn-sm" onclick="addCombo('c3', '3 Burgers + Papas + Gaseosa 1.5L')">+ Agregar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PROMOS PARA COMPARTIR -->
+  <div class="menu-section" id="sec-promos">
+    <div class="cat-title">Promos para Compartir</div>
+    <div class="combo-grid">
+
+      <div class="combo-card">
+        <div class="combo-name">2 Burgers a elección + Papas</div>
+        <div class="combo-prices">
+          <div class="combo-price-item"><div class="combo-price-label">Dobles</div><div class="combo-price-val">$22.200</div></div>
+          <div class="combo-price-item"><div class="combo-price-label">Triples</div><div class="combo-price-val">$28.400</div></div>
+          <div class="combo-price-item"><div class="combo-price-label">Cuádruple</div><div class="combo-price-val">$34.200</div></div>
+        </div>
+        <div class="combo-add-area">
+          <select class="tier-select" id="p1">
+            <option value="22200">Dobles</option>
+            <option value="28400">Triples</option>
+            <option value="34200">Cuádruples</option>
+          </select>
+          <button class="add-btn-sm" onclick="addCombo('p1', '2 Burgers + Papas (promo)')">+ Agregar</button>
+        </div>
+      </div>
+
+      <div class="combo-card">
+        <div class="combo-name">3 Burgers a elección + Papas</div>
+        <div class="combo-prices">
+          <div class="combo-price-item"><div class="combo-price-label">Dobles</div><div class="combo-price-val">$32.300</div></div>
+          <div class="combo-price-item"><div class="combo-price-label">Triples</div><div class="combo-price-val">$41.300</div></div>
+          <div class="combo-price-item"><div class="combo-price-label">Cuádruple</div><div class="combo-price-val">$49.700</div></div>
+        </div>
+        <div class="combo-add-area">
+          <select class="tier-select" id="p2">
+            <option value="32300">Dobles</option>
+            <option value="41300">Triples</option>
+            <option value="49700">Cuádruples</option>
+          </select>
+          <button class="add-btn-sm" onclick="addCombo('p2', '3 Burgers + Papas (promo)')">+ Agregar</button>
+        </div>
+      </div>
+
+      <div class="combo-card">
+        <div class="combo-name">4 Burgers a elección + Papas</div>
+        <div class="combo-prices">
+          <div class="combo-price-item"><div class="combo-price-label">Dobles</div><div class="combo-price-val">$41.700</div></div>
+          <div class="combo-price-item"><div class="combo-price-label">Triples</div><div class="combo-price-val">$53.400</div></div>
+          <div class="combo-price-item"><div class="combo-price-label">Cuádruple</div><div class="combo-price-val">$64.300</div></div>
+        </div>
+        <div class="combo-add-area">
+          <select class="tier-select" id="p3">
+            <option value="41700">Dobles</option>
+            <option value="53400">Triples</option>
+            <option value="64300">Cuádruples</option>
+          </select>
+          <button class="add-btn-sm" onclick="addCombo('p3', '4 Burgers + Papas (promo)')">+ Agregar</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="cat-title" style="margin-top:48px;">Balde X4</div>
+    <div class="items-grid">
+      <div class="item-card full-price">
+        <div class="item-name">🪣 Balde X4</div>
+        <div class="item-desc">Balde con 4 hamburguesas de un medallón, variedad a elección + papas + dip de cheddar. Comen 2, dos para cada uno.</div>
+        <div class="item-footer">
+          <div class="item-price">$32.000</div>
+          <button class="add-btn" onclick="addFixed(this, 'Balde X4 (4 burgers + papas + dip cheddar)', 32000)">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MENÚ ÉPICO -->
+  <div class="menu-section" id="sec-epico">
+    <div class="cat-title">Menú Épico</div>
+    <div class="epic-grid">
+
+      <div class="epic-card">
+        <div class="epic-corner">ÉPICO</div>
+        <div class="epic-name">🪣 Balde X4</div>
+        <div class="epic-desc">Balde con 4 hamburguesas de un medallón, variedad a elección + papas + dip de cheddar. Comen 2, dos para cada uno.</div>
+        <div class="epic-bottom">
+          <div>
+            <div class="epic-price">$32.000</div>
+          </div>
+          <button class="add-btn" onclick="addFixed(this, 'Balde X4 (Menú Épico)', 32000)">+</button>
+        </div>
+      </div>
+
+      <div class="epic-card">
+        <div class="epic-corner">ÉPICO</div>
+        <div class="epic-name">Doctor Whopper</div>
+        <div class="epic-desc">Doble medallón con doble feta de cheddar, lechuga, tomate, panceta, mayochimi, en pan de sésamo + papas</div>
+        <div class="epic-bottom">
+          <div>
+            <div class="epic-price">$13.600</div>
+            <div class="epic-note">No entra en promos para compartir</div>
+          </div>
+          <button class="add-btn" onclick="addFixed(this, 'Doctor Whopper', 13600)">+</button>
+        </div>
+      </div>
+
+      <div class="epic-card">
+        <div class="epic-corner">ÉPICO</div>
+        <div class="epic-name">Maldita XL</div>
+        <div class="epic-desc">Hamburguesa triple medallón 150g, queso cheddar, ketchup, alioli y panceta ahumada en pan XL + papas</div>
+        <div class="epic-bottom">
+          <div>
+            <div class="epic-price">$16.600</div>
+            <div class="epic-note">No entra en promos para compartir</div>
+          </div>
+          <button class="add-btn" onclick="addFixed(this, 'Maldita XL', 16600)">+</button>
+        </div>
+      </div>
+
+      <div class="epic-card prox">
+        <div class="epic-name">Nuggues de Pollo</div>
+        <div class="epic-desc">Próximamente disponible</div>
+        <div class="epic-bottom"><div class="epic-price">—</div></div>
+      </div>
+
+      <div class="epic-card prox">
+        <div class="epic-name">Aros de Cebolla</div>
+        <div class="epic-desc">Próximamente disponible</div>
+        <div class="epic-bottom"><div class="epic-price">—</div></div>
+      </div>
+
+      <div class="epic-card prox">
+        <div class="epic-name">Dr. Guacamole</div>
+        <div class="epic-desc">Próximamente disponible</div>
+        <div class="epic-bottom"><div class="epic-price">—</div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BEBIDAS Y POSTRES -->
+  <div class="menu-section" id="sec-bebidas">
+    <div class="cat-title">Bebidas</div>
+    <div class="simple-grid">
+      <div class="simple-card">
+        <div>
+          <div class="simple-name">Gaseosa 1.5 Lt</div>
+          <div class="simple-price">$5.000</div>
+        </div>
+        <button class="add-btn" onclick="addFixed(this, 'Gaseosa 1.5 Lt', 5000)">+</button>
+      </div>
+      <div class="simple-card">
+        <div>
+          <div class="simple-name">Gaseosa 500 ml</div>
+          <div class="simple-price">$3.000</div>
+        </div>
+        <button class="add-btn" onclick="addFixed(this, 'Gaseosa 500 ml', 3000)">+</button>
+      </div>
+    </div>
+
+    <div class="cat-title" style="margin-top:48px;">Postres</div>
+    <div class="simple-grid">
+      <div class="simple-card">
+        <div>
+          <div class="simple-name">Chocotorta</div>
+          <div class="simple-price">$6.000</div>
+        </div>
+        <button class="add-btn" onclick="addFixed(this, 'Postre - Chocotorta', 6000)">+</button>
+      </div>
+      <div class="simple-card">
+        <div>
+          <div class="simple-name">Choco-Oreo</div>
+          <div class="simple-price">$6.000</div>
+        </div>
+        <button class="add-btn" onclick="addFixed(this, 'Postre - Choco-Oreo', 6000)">+</button>
+      </div>
+      <div class="simple-card">
+        <div>
+          <div class="simple-name">Tiramisú</div>
+          <div class="simple-price">$6.000</div>
+        </div>
+        <button class="add-btn" onclick="addFixed(this, 'Postre - Tiramisú', 6000)">+</button>
+      </div>
+      <div class="simple-card">
+        <div>
+          <div class="simple-name">Cheese Cake</div>
+          <div class="simple-price">$6.000</div>
+        </div>
+        <button class="add-btn" onclick="addFixed(this, 'Postre - Cheese Cake', 6000)">+</button>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- CART SIDEBAR -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <div class="cart-title">🛒 Tu Pedido</div>
+    <button class="close-btn" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <div class="cart-empty-icon">🍔</div>
+      <div>Tu carrito está vacío.<br>¡Elegí algo del menú!</div>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span class="cart-total-label">TOTAL</span>
+      <span class="cart-total-val" id="cartTotal">$0</span>
+    </div>
+    <div class="cart-note">Los precios son en pesos argentinos</div>
+    <button class="whatsapp-btn" id="whatsappBtn" onclick="sendToWhatsapp()" disabled>
+      <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Pedir por WhatsApp
+    </button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--yellow);letter-spacing:3px;margin-bottom:8px;">DR.<span style="color:#fff">BURGER</span></div>
+  <div>San Luis, Argentina 🇦🇷</div>
+  <div style="margin-top:8px;">Todos los precios en pesos argentinos · <strong>Precios sujetos a cambio sin previo aviso</strong></div>
+</footer>
+
+<script>
+  // ---- STATE ----
+  let cart = [];
+  let cartOpen = false;
+
+  // ---- TABS ----
+  function showTab(tab) {
+    document.querySelectorAll('.menu-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('sec-' + tab).classList.add('active');
+    const btns = document.querySelectorAll('.tab-btn');
+    const tabMap = { burgers: 0, lomito: 1, combos: 2, promos: 3, epico: 4, bebidas: 5 };
+    if (tabMap[tab] !== undefined) btns[tabMap[tab]].classList.add('active');
+  }
+
+  // ---- PRICE UPDATE ----
+  function updatePrice(sel) {
+    const card = sel.closest('.item-card');
+    const display = card.querySelector('.price-display');
+    if (display) {
+      display.textContent = Number(sel.value).toLocaleString('es-AR');
+    }
+  }
+
+  // ---- ADD FROM BURGER CARD ----
+  function addFromCard(btn) {
+    const card = btn.closest('.item-card');
+    const name = card.dataset.name;
+    const sel = card.querySelector('.tier-select');
+    const tier = sel ? sel.options[sel.selectedIndex].text : '';
+    const price = sel ? Number(sel.value) : Number(card.dataset.fixed);
+    const desc = tier ? name + ' (' + tier + ')' : name;
+    addToCart(desc, price);
+  }
+
+  // ---- ADD FIXED PRICE ----
+  function addFixed(btn, name, price) {
+    addToCart(name, price);
+  }
+
+  // ---- ADD COMBO ----
+  function addCombo(selId, name) {
+    const sel = document.getElementById(selId);
+    const tier = sel.options[sel.selectedIndex].text;
+    const price = Number(sel.value);
+    addToCart(name + ' (' + tier + ')', price);
+  }
+
+  // ---- CORE ADD ----
+  function addToCart(name, price) {
+    const existing = cart.find(i => i.name === name);
+    if (existing) {
+      existing.qty++;
+    } else {
+      cart.push({ id: Date.now(), name, price, qty: 1 });
+    }
+    renderCart();
+    showToast('✓ ' + name + ' agregado');
+  }
+
+  // ---- RENDER CART ----
+  function renderCart() {
+    const container = document.getElementById('cartItems');
+    const countEl = document.getElementById('cartCount');
+    const totalEl = document.getElementById('cartTotal');
+    const wpBtn = document.getElementById('whatsappBtn');
+
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const count = cart.reduce((s, i) => s + i.qty, 0);
+
+    countEl.textContent = count;
+    totalEl.textContent = '$' + total.toLocaleString('es-AR');
+    wpBtn.disabled = cart.length === 0;
+
+    if (cart.length === 0) {
+      container.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🍔</div><div>Tu carrito está vacío.<br>¡Elegí algo del menú!</div></div>';
+      return;
+    }
+
+    container.innerHTML = cart.map(item => `
+      <div class="cart-item" id="ci-${item.id}">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">$${(item.price * item.qty).toLocaleString('es-AR')}</div>
+          <div class="cart-item-controls">
+            <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+            <span class="qty-num">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+          </div>
+        </div>
+        <button class="remove-btn" onclick="removeItem(${item.id})" title="Eliminar">✕</button>
+      </div>
+    `).join('');
+  }
+
+  function changeQty(id, delta) {
+    const item = cart.find(i => i.id === id);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+    renderCart();
+  }
+
+  function removeItem(id) {
+    cart = cart.filter(i => i.id !== id);
+    renderCart();
+  }
+
+  // ---- CART OPEN/CLOSE ----
+  function openCart() {
+    document.getElementById('overlay').classList.add('open');
+    document.getElementById('cartSidebar').classList.add('open');
+    cartOpen = true;
+  }
+  function closeCart() {
+    document.getElementById('overlay').classList.remove('open');
+    document.getElementById('cartSidebar').classList.remove('open');
+    cartOpen = false;
+  }
+
+  // ---- WHATSAPP ----
+  function sendToWhatsapp() {
+    if (cart.length === 0) return;
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    let msg = '🍔 *PEDIDO DR. BURGER* 🍔\n\n';
+    cart.forEach(item => {
+      msg += `• ${item.name} x${item.qty} — $${(item.price * item.qty).toLocaleString('es-AR')}\n`;
+    });
+    msg += `\n💰 *TOTAL: $${total.toLocaleString('es-AR')}*\n\n`;
+    msg += '✅ ¡Todo listo! ¿Podría confirmar mi pedido? 🙏';
+
+    // REEMPLAZÁ este número con el número real de WhatsApp del local
+    const phone = '5492664000000';
+    const url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
+    window.open(url, '_blank');
+  }
+
+  // ---- TOAST ----
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  // ---- INIT ----
+  renderCart();
+</script>
+</body>
+</html>
